@@ -70,7 +70,7 @@ import { useState } from 'react';
 import User from "./Navbar";
 import Product from "./Product";
 import Form from "./Form";
-
+import Test from './UseEffect';
 export default function App() {
   const users = [
     { id: 1, name: "Amir", age: 20 },
@@ -86,6 +86,7 @@ export default function App() {
 
   return (
     <div>
+      <Test></Test>
       <User name="amir" age={12} />
 
       <Product

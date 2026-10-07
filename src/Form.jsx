@@ -6,8 +6,10 @@ function Form() {
         e.preventDefault();
         console.log(name);
         console.log(age);
+        setAge("")
+        setName("")
+        alert(`${name} ${age} ارسال شد`)
     }
-
     return(
         <form onSubmit={handlenName}>
             <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
