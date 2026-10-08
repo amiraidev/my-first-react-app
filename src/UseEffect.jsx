@@ -13,25 +13,47 @@ function Test() {
         <button onClick={increase}>+</button>
         <button onClick={deacrease}>-</button>
         <Getdata />
-
     </div>
 }
 
 const Getdata = () => {
     const [getdata, setGetdata] = useState([]);
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(true);
+
     const getPosts = async () => {
-        const response = await fetch("https://jsonplaceholder.typicode.com/posts")
-        const data = await response.json()
-        console.log(data)
-        setGetdata(data)
+        setError(false)
+        setLoading(true)
+        try {
+            
+                const response = await fetch("https://jsonplaceholder.typicode.com/posts")
+                if (!response.ok) {
+                    throw new Error("ارور میده!!!")
+                }
+                const data = await response.json()
+                console.log(data)
+                setGetdata(data)
+            
+        }
+        catch {
+            
+                setError(true)
+                setGetdata([])
+            
+        }
+        finally {
+            setLoading(false)
+            console.log("یک اتفاقی افتاد!")
+        }
     }
-    useEffect(() => getPosts, []);
+    useEffect(() => { getPosts() }, []);
     return (
         <div>
+            {loading && <p>در حال دریافت داده ها ...</p>}
+            {error && <p>خطا در ردریافت داده ها...</p>}
             <button onClick={getPosts}>دربافت اطلاعلات</button>
-
             {getdata.filter(data => data.userId === 1).map(data => <h3 key={data.id}>{data.title}</h3>)}
         </div>
     )
 }
-export default Test; 
+export default Test;
