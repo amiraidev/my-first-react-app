@@ -71,6 +71,7 @@ import User from "./Navbar";
 import Product from "./Product";
 import Form from "./Form";
 import Test from './UseEffect';
+import CreatePost from './component/CreatePost';
 export default function App() {
   const users = [
     { id: 1, name: "Amir", age: 20 },
@@ -86,6 +87,7 @@ export default function App() {
 
   return (
     <div>
+      <CreatePost/>
       <Test></Test>
       <User name="amir" age={12} />
 
