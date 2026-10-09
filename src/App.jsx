@@ -72,6 +72,8 @@ import Product from "./Product";
 import Form from "./Form";
 import Test from './UseEffect';
 import CreatePost from './component/CreatePost';
+import PostManager from './component/PostManager';
+import {Routes,Route} from 'react-router-dom';
 export default function App() {
   const users = [
     { id: 1, name: "Amir", age: 20 },
@@ -86,29 +88,37 @@ export default function App() {
   ];
 
   return (
-    <div>
-      <CreatePost/>
-      <Test></Test>
-      <User name="amir" age={12} />
+    <Routes>
+  <Route
+    path="/"
+    element={
+      <>
+        <CreatePost />
+        <Test />
+        <User name="amir" age={12} />
 
-      <Product
-        name="Peste"
-        number={1}
-        aviable={true}
-      />
+        <Product
+          name="Peste"
+          number={1}
+          aviable={true}
+        />
 
-      {products
-        .filter(product => product.number > 0)
-        .map(product => (
-          <Product
-            key={product.id}
-            name={product.name}
-            number={product.number}
-          />
-        ))
-      }
+        {products
+          .filter(product => product.number > 0)
+          .map(product => (
+            <Product
+              key={product.id}
+              name={product.name}
+              number={product.number}
+            />
+          ))}
 
-      <Form />
-    </div>
+        <Form />
+      </>
+    }
+  />
+
+  <Route path="/Post" element={<PostManager />} />
+</Routes>
   );
 }
