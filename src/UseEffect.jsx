@@ -9,6 +9,7 @@ function Test() {
     }
     useEffect(() => console.log("Component loaded!", count), [count])
 
+
     return <div>
         <button onClick={increase}>+</button>
         <button onClick={deacrease}>-</button>
@@ -16,30 +17,32 @@ function Test() {
     </div>
 }
 
+
+
 const Getdata = () => {
     const [getdata, setGetdata] = useState([]);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(true);
-
+    const [search, setSearch] = useState("");
     const getPosts = async () => {
         setError(false)
         setLoading(true)
         try {
-            
-                const response = await fetch("https://jsonplaceholder.typicode.com/posts")
-                if (!response.ok) {
-                    throw new Error("ارور میده!!!")
-                }
-                const data = await response.json()
-                console.log(data)
-                setGetdata(data)
-            
+
+            const response = await fetch("https://jsonplaceholder.typicode.com/posts")
+            if (!response.ok) {
+                throw new Error("ارور میده!!!")
+            }
+            const data = await response.json()
+            console.log(data)
+            setGetdata(data)
+
         }
         catch {
-            
-                setError(true)
-                setGetdata([])
-            
+
+            setError(true)
+            setGetdata([])
+
         }
         finally {
             setLoading(false)
@@ -47,12 +50,19 @@ const Getdata = () => {
         }
     }
     useEffect(() => { getPosts() }, []);
+    const searchfield = getdata.filter(post => post.userId === 1 && 
+        post.title.toLowerCase().includes(search.trim().toLowerCase()))
+
     return (
         <div>
+            <input type="text" placeholder="جستجو..." value={search} onChange={(e) => setSearch(e.target.value)} />
+            {searchfield.length === 0 && (
+                <p>نتیجه‌ای پیدا نشد.</p>
+            )}
             {loading && <p>در حال دریافت داده ها ...</p>}
             {error && <p>خطا در ردریافت داده ها...</p>}
             <button onClick={getPosts}>دربافت اطلاعلات</button>
-            {getdata.filter(data => data.userId === 1).map(data => <h3 key={data.id}>{data.title}</h3>)}
+            {searchfield.filter(data => data.userId === 1).map(data => <h3 key={data.id}>{data.title}</h3>)}
         </div>
     )
 }
